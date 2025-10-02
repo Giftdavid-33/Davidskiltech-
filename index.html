@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Davidskiltech Expert - Tech Made Simple</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1e40af;
+      --secondary: #10b981;
+      --dark: #1f2937;
+      --light: #f9fafb;
+      --border: #e5e7eb;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideInFromLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInFromRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    .animate-fade-in-up {
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .animate-slide-left {
+      animation: slideInFromLeft 0.6s ease-out;
+    }
+
+    .animate-slide-right {
+      animation: slideInFromRight 0.6s ease-out;
+    }
+
+    /* Navigation */
+    .navbar {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .navbar.scrolled {
+      box-shadow: 0 4px 30px rgba(0,0,0,0.12);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+      padding: 8px;
+    }
+
+    .hamburger {
+      width: 28px;
+      height: 3px;
+      background: var(--dark);
+      transition: all 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .user-menu {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 0.7rem 1.8rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: var(--secondary);
+      color: white;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      box-shadow: none;
+    }
+
+    .btn-sm {
+      padding: 0.5rem 1.3rem;
+      font-size: 0.9rem;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+    }
+
+    #hero-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      object-fit: cover;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.7), rgba(16, 185, 129, 0.6));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      color: white;
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-weight: 800;
+      line-height: 1.2;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .hero p {
+      color: white;
+      font-size: 1.6rem;
+      margin-bottom: 2.5rem;
+      text-align: center;
+      font-weight: 300;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      animation: fadeInUp 1s ease-out 0.2s both;
+    }
+
+    .hero .btn {
+      animation: fadeInUp 1s ease-out 0.4s both;
+      font-size: 1.1rem;
+      padding: 1rem 2.5rem;
+    }
+
+    /* Sections */
+    .section {
+      padding: 6rem 0;
+      position: relative;
+    }
+
+    .section:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .section h2 {
+      text-align: center;
+      font-size: 2.8rem;
+      margin-bottom: 3.5rem;
+      color: var(--primary);
+      font-weight: 800;
+      position: relative;
+      display: inline-block;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .section h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: var(--secondary);
+      border-radius: 2px;
+    }
+
+    .section p {
+      max-width: 850px;
+      margin: 0 auto 3rem;
+      text-align: center;
+      color: #4b5563;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    /* Cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .card:hover img {
+      transform: scale(1.1);
+    }
+
+    .card h3 {
+      padding: 1.5rem 1.5rem 0.5rem;
+      color: var(--primary);
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .card p {
+      padding: 0 1.5rem 1.5rem;
+      text-align: left;
+      color: #6b7280;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .card .card-footer {
+      padding: 1.2rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f9fafb;
+    }
+
+    .card .price {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--secondary);
+    }
+
+    /* Gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .gallery-grid > div {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+    }
+
+    .gallery-grid > div:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      max-height: 380px;
+      height: auto;
+      object-fit: contain;
+      object-position: center top;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+
+    .gallery-grid img:hover {
+      transform: scale(1.03);
+    }
+
+    .gallery-grid h3 {
+      margin: 1rem 0 0.3rem;
+      font-size: 1.3rem;
+      color: #111827;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .gallery-grid p {
+      margin: 0;
+      font-size: 1rem;
+      color: #6b7280;
+      text-align: center;
+    }
+
+    /* Testimonials */
+    .testimonial-carousel {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .testimonial {
+      display: none;
+      text-align: center;
+      padding: 3rem;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .testimonial.active {
+      display: block;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    .testimonial p {
+      font-size: 1.3rem;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      color: #374151;
+      line-height: 1.8;
+    }
+
+    .testimonial h4 {
+      color: var(--primary);
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    /* Auth Pages */
+    .auth-page {
+      display: none;
+      min-height: 100vh;
+      padding: 6rem 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .auth-page.active {
+      display: flex;
+    }
+
+    .auth-container {
+      background: white;
+      padding: 3rem;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      max-width: 500px;
+      width: 90%;
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .auth-container h2 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 2rem;
+      font-size: 2.2rem;
+    }
+
+    .auth-container h2::after {
+      display: none;
+    }
+
+    .form-group {
+      margin-bottom: 1.8rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.6rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .auth-links {
+      text-align: center;
+      margin-top: 1.5rem;
+      color: #6b7280;
+    }
+
+    .auth-links a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .auth-links a:hover {
+      color: var(--primary-dark);
+    }
+
+    .back-to-home {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .back-to-home:hover {
+      transform: translateX(-5px);
+    }
+
+    /* Contact Form */
+    .form-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 3rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    }
+
+    /* Dashboard */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.5rem;
+      margin: 3rem 0;
+    }
+
+    .dashboard-card {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .dashboard-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+
+    .dashboard-card h3 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-size: 1.2rem;
+    }
+
+    .dashboard-card .number {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: var(--secondary);
+    }
+
+    /* Cart */
+    .cart-icon {
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .cart-icon:hover {
+      transform: scale(1.1);
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--danger);
+      color: white;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      animation: pulse 2s infinite;
+    }
+
+    /* Alert */
+    .alert {
+      padding: 1.2rem;
+      border-radius: 10px;
+      margin: 1.5rem 0;
+      font-weight: 500;
+    }
+
+    .alert-success {
+      background: #d1fae5;
+      color: #065f46;
+      border: 2px solid #10b981;
+    }
+
+    .alert-info {
+      background: #dbeafe;
+      color: #1e40af;
+      border: 2px solid #2563eb;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 3rem 0;
+      margin-top: 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .socials {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .socials a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .socials a:hover {
+      color: var(--secondary);
+      transform: translateY(-2px);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-toggle {
+        display: flex;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: white;
+        flex-direction: column;
+        padding: 2rem;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        display: none;
+        gap: 1.5rem;
+      }
+
+      .nav-links.active {
+        display: flex;
+        animation: fadeInUp 0.4s ease-out;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+      }
+
+      .section h2 {
+        font-size: 2.2rem;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .user-menu {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .auth-container {
+        padding: 2rem;
+      }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Scroll Reveal */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease-out;
+    }
+
+    .scroll-reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Order Items */
+    .order-item {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1.2rem;
+      padding-bottom: 1.2rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .status-badge {
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .status-pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .status-completed {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .status-processing {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="logo">Davidskiltech Expert</div>
+      <button class="nav-toggle" aria-label="Toggle navigation" onclick="toggleMenu()">
+        <span class="hamburger"></span>
+        <span class="hamburger"></span>
+        <span class="hamburger"></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" onclick="navigate('home')">Home</a></li>
+        <li><a href="#about" onclick="navigate('about')">About</a></li>
+        <li><a href="#products" onclick="navigate('products')">Products</a></li>
+        <li><a href="#services" onclick="navigate('services')">Services</a></li>
+        <li><a href="#gallery" onclick="navigate('gallery')">Gallery</a></li>
+        <li><a href="#testimonials" onclick="navigate('testimonials')">Testimonials</a></li>
+        <li><a href="#contact" onclick="navigate('contact')">Contact</a></li>
+      </ul>
+      <div class="user-menu">
+        <div class="cart-icon" onclick="alert('Cart feature - Login required')" id="cartIcon" style="display:none;">
+          🛒 <span class="cart-count" id="cartCount">0</span>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="showPage('login')" id="loginBtn">Login</button>
+        <button class="btn btn-secondary btn-sm" onclick="showPage('register')" id="registerBtn">Register</button>
+        <button class="btn btn-outline btn-sm" onclick="alert('Dashboard')" id="dashboardBtn" style="display:none;">Dashboard</button>
+        <button class="btn btn-outline btn-sm" onclick="logout()" id="logoutBtn" style="display:none;">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div id="mainContent">
+    <!-- Hero -->
+    <header id="home" class="hero">
+      <video autoplay muted loop playsinline id="hero-video" poster="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920">
+        <source src="video/Comforting R&B Gospel Music- Modern Christian Praise & Worship Music.mp4" type="video/mp4" />
+      </video>
+      <div class="hero-overlay">
+        <div class="container">
+          <h1>Welcome to Davidskiltech Expert<br>Tech Made Simple</h1>
+          <p>Smart Tech. Expert Solutions.</p>
+          <a href="#products" class="btn btn-primary">Explore Now</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- About -->
+    <section id="about" class="about section scroll-reveal">
+      <div class="container">
+        <h2>About Us</h2>
+        <p>Davidskiltech Expert is a fast-rising technology brand dedicated to providing reliable, innovative, 
+          and customer-focused IT solutions. With a strong foundation in system hardware & software maintenance, 
+          IT support services, and web development, we help individuals, businesses, and organizations 
+          optimize their technology for efficiency, security, and growth.</p>
+      </div>
+    </section>
+    
+    <section class="about section scroll-reveal">
+      <div class="container">
+        <h2>Our Vision</h2>
+        <p>At Davidskiltech Expert, our vision is to redefine how individuals and businesses experience 
+          technology. We aspire to become a global leader in IT solutions, digital innovation, and tech 
+          product distribution—where reliability meets creativity.</p>
+      </div>
+    </section>
+    
+    <section class="about section scroll-reveal">
+      <div class="container">
+        <h2>Our Mission</h2>
+        <p>Our mission at Davidskiltech Expert is to simplify technology and make it work for everyone.
+           We are dedicated to providing holistic IT support services, dependable system hardware and 
+           software maintenance, innovative web development, and impactful graphic design solutions.</p>
+      </div>
+    </section>
+
+    <!-- Products -->
+    <section id="products" class="products section scroll-reveal">
+      <div class="container">
+        <h2>Our Products</h2>
+        <div class="card-grid">
+          <article class="card">
+            <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=400" alt="Web Design" onerror="this.src='https://via.placeholder.com/400x220/667eea/ffffff?text=Web+Design'" />
+            <h3>Web Design & Development</h3>
+            <p>Responsive, modern, and user-friendly websites. E-commerce and business sites.</p>
+            <div class="card-footer">
+              <span class="price">From $500</span>
+              <button class="btn btn-primary btn-sm" onclick="requireLogin()">Order Now</button>
+            </div>
+          </article>
+         
+          <article class="card">
+            <img src="image/2.jpg" alt="Mobile App" onerror="this.src='https://via.placeholder.com/400x220/764ba2/ffffff?text=Mobile+App'" />
+            <h3>Mobile App Development</h3>
+            <p>Android & iOS applications. Cross-platform solutions for businesses and startups.</p>
+            <div class="card-footer">
+              <span class="price">From $1200</span>
+              <button class="btn btn-primary btn-sm" onclick="requireLogin()">Order Now</button>
+            </div>
+          </article>
+          
+          <article class="card">
+            <img src="image/35.jpg" alt="Laptops" onerror="this.src='https://via.placeholder.com/400x220/667eea/ffffff?text=Laptops'" />
+            <h3>Sales of Laptops</h3>
+            <p>Durable, high-performance laptops for students, professionals, and organizations.</p>
+            <div class="card-footer">
+              <span class="price">From $400</span>
+              <button class="btn btn-primary btn-sm" onclick="requireLogin()">Order Now</button>
+            </div>
+          </article>
+          
+          <article class="card">
+            <img src="image/11.jpg" alt="Graphic Design" onerror="this.src='https://via.placeholder.com/400x220/764ba2/ffffff?text=Graphic+Design'" />
+            <h3>Graphic Design</h3>
+            <p>Creative and professional designs for branding, marketing, and digital content.</p>
+            <div class="card-footer">
+              <span class="price">From $150</span>
+              <button class="btn btn-primary btn-sm" onclick="requireLogin()">Order Now</button>
+            </div>
+          </article>
+          
+          <article class="card">
+            <img src="image/19.jpg" alt="Accessories" onerror="this.src='https://via.placeholder.com/400x220/667eea/ffffff?text=Accessories'" />
+            <h3>Accessories & Gadgets</h3>
+            <p>Quality tech accessories that make your digital experience smoother.</p>
+            <div class="card-footer">
+              <span class="price">From $150</span>
+              <button class="btn btn-primary btn-sm" onclick="requireLogin()">Order Now</button>
+            </div>
+          </article>
+           
+          <article class="card">
+            <img src="image/18.jpg" alt="iPhones" onerror="this.src='https://via.placeholder.com/400x220/764ba2/ffffff?text=iPhones'" />
+            <h3>Sales of all kinds of iPhones</h3>
+            <p>Quality brand new iPhones both UK used and new Android phones.</p>
+            <div class="card-footer">
+              <span class="price">From $300</span>
+              <button class="btn btn-primary btn-sm" onclick="requireLogin()">Order Now</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="services section scroll-reveal">
+      <div class="container">
+        <h2>Our Core Services</h2>
+        <div class="card-grid">
+          <article class="card">
+            <img src="image" alt="IT Support" onerror="this.src='https://via.placeholder.com/400x220/667eea/ffffff?text=IT+Support'" />
+            <h3>IT Support & Consulting</h3>
+            <p>We provide both onsite and remote IT support services, troubleshooting technical issues, managing system upgrades, and guiding businesses on best practices.</p>
+            <div class="card-footer">
+              <button class="btn btn-secondary" onclick="requireLogin()">Request Service</button>
+            </div>
+          </article>
+          <article class="card">
+            <img src="image/10.jpg" alt="Maintenance" onerror="this.src='https://via.placeholder.com/400x220/764ba2/ffffff?text=Maintenance'" />
+            <h3>System Hardware & Software Maintenance</h3>
+            <p>From repairs and installations to upgrades and optimization, we ensure your systems run smoothly with minimal downtime.</p>
+            <div class="card-footer">
+              <button class="btn btn-secondary" onclick="requireLogin()">Request Service</button>
+            </div>
+          </article>
+          <article class="card">
+            <img src="image/1.jpg" alt="Web Development" onerror="this.src='https://via.placeholder.com/400x220/667eea/ffffff?text=Web+Development'" />
+            <h3>Web Development & Digital Solutions</h3>
+            <p>We design and build professional, user-friendly, and responsive websites that help businesses establish a strong online presence.</p>
+            <div class="card-footer">
+              <button class="btn btn-secondary" onclick="requireLogin()">Request Service</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery" class="gallery section scroll-reveal">
+      <div class="container">
+        <h2>Our Team</h2>
+        <div class="gallery-grid">
+          <div>
+            <img src="image/32.jpg" alt="David Mfon Dige" onerror="this.src='https://ui-avatars.com/api/?name=David+Mfon&size=400&background=667eea&color=fff&bold=true'" />
+            <h3>David Mfon Dige</h3>
+            <p>CEO & Founder</p>
+          </div>
+          <div>
+            <img src="image/33.jpg" alt="Samuel Raphael" onerror="this.src='https://ui-avatars.com/api/?name=Samuel+Raphael&size=400&background=764ba2&color=fff&bold=true'" />
+            <h3>Samuel Raphael</h3>
+            <p>Sales Executive</p>
+          </div>
+          <div>
+            <img src="image/31.jpg" alt="Divine" onerror="this.src='https://ui-avatars.com/api/?name=Divine&size=400&background=667eea&color=fff&bold=true'" />
+            <h3>Divine</h3>
+            <p>Front Desk Officer</p>
+          </div>
+          <div>
+            <img src="image/27.jpg" alt="Jennifer Mfon" onerror="this.src='https://ui-avatars.com/api/?name=Jennifer+Mfon&size=400&background=764ba2&color=fff&bold=true'" />
+            <h3>Jennifer Mfon</h3>
+            <p>Human Resource Manager</p>
+          </div>
+          <div>
+            <img src="image/34.jpg" alt="Hope" onerror="this.src='https://ui-avatars.com/api/?name=Hope&size=400&background=667eea&color=fff&bold=true'" />
+            <h3>Hope</h3>
+            <p>Creative Executive</p>
+          </div>
+          <div>
+            <img src="image/29.jpg" alt="Favour Bassey" onerror="this.src='https://ui-avatars.com/api/?name=Favour+Bassey&size=400&background=764ba2&color=fff&bold=true'" />
+            <h3>Favour Bassey</h3>
+            <p>Sales Accountant</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="testimonials section scroll-reveal">
+      <div class="container">
+        <h2>What Our Clients Say</h2>
+        <div class="testimonial-carousel">
+          <div class="testimonial active">
+            <p>"Best service ever! Highly recommend."</p>
+            <h4>- Esther John</h4>
+          </div>
+          <div class="testimonial">
+            <p>"Amazing products and great customer support."</p>
+            <h4>- James Peter</h4>
+          </div>
+          <div class="testimonial">
+            <p>"Professional and trustworthy team."</p>
+            <h4>- Michael John</h4>
+          </div>
+          <div class="testimonial">
+            <p>"Davidskiltech Expert resolved my computer issues in no time. Their IT support team is reliable and professional."</p>
+            <h4>- Emeka Ike, Small Business Owner</h4>
+          </div>
+          <div class="testimonial">
+            <p>"I had my laptop upgraded and serviced by Davidskiltech Expert. The system runs faster than ever!"</p>
+            <h4>- Sophia Williams, Student</h4>
+          </div>
+          <div class="testimonial">
+            <p>"They built a beautiful, functional website for my business. The design is modern and exactly what I envisioned."</p>
+            <h4>- David Okechukwu, Entrepreneur</h4>
+          </div>
+          <div class="testimonial">
+            <p>"The graphic design team completely transformed my brand image. Clean, creative, and eye-catching designs every time."</p>
+            <h4>- Grace Thompson, Fashion Brand Owner</h4>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact section scroll-reveal">
+      <div class="container">
+        <h2>Contact Us</h2>
+        <div class="form-container">
+          <form id="contactForm" onsubmit="submitContact(event)">
+            <h3 style="text-align:center; margin-bottom:2rem;">Get in Touch</h3>
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" id="contactName" required>
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" id="contactEmail" required>
+            </div>
+            <div class="form-group">
+              <label>Message</label>
+              <textarea id="contactMessage" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container footer-inner">
+        <p>&copy; 2025 Davidskiltech Expert | Built with ❤️</p>
+        <div class="socials">
+          <a href="#" target="_blank">Facebook</a>
+          <a href="#" target="_blank">Instagram</a>
+          <a href="#" target="_blank">LinkedIn</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Login Page -->
+  <div id="loginPage" class="auth-page">
+    <div class="auth-container">
+      <a href="#" onclick="showPage('main')" class="back-to-home">← Back to Home</a>
+      <h2>Login to Your Account</h2>
+      <form onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="loginEmail" required placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPassword" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%">Login</button>
+      </form>
+      <div class="auth-links">
+        Don't have an account? <a href="#" onclick="showPage('register')">Register here</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Register Page -->
+  <div id="registerPage" class="auth-page">
+    <div class="auth-container">
+      <a href="#" onclick="showPage('main')" class="back-to-home">← Back to Home</a>
+      <h2>Create New Account</h2>
+      <form onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="regName" required placeholder="John Doe">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="regEmail" required placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="regPassword" required minlength="6" placeholder="••••••••">
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" id="regConfirmPassword" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%">Register</button>
+      </form>
+      <div class="auth-links">
+        Already have an account? <a href="#" onclick="showPage('login')">Login here</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Data storage
+    let users = JSON.parse(localStorage.getItem('users') || '[]');
+    let currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      if (currentUser) {
+        updateUIForLoggedInUser();
+      }
+      
+      // Scroll animations
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+      
+      // Navbar scroll effect
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          document.getElementById('navbar').classList.add('scrolled');
+        } else {
+          document.getElementById('navbar').classList.remove('scrolled');
+        }
+      });
+
+      rotateTestimonials();
+    });
+
+    // Page navigation
+    function showPage(page) {
+      document.getElementById('mainContent').style.display = page === 'main' ? 'block' : 'none';
+      document.getElementById('loginPage').classList.toggle('active', page === 'login');
+      document.getElementById('registerPage').classList.toggle('active', page === 'register');
+      
+      if (page === 'main') {
+        window.scrollTo(0, 0);
+      }
+    }
+
+    function navigate(section) {
+      showPage('main');
+      setTimeout(() => {
+        document.getElementById(section).scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+
+    // Navigation toggle
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('active');
+    }
+
+    // Authentication
+    function handleRegister(e) {
+      e.preventDefault();
+      const name = document.getElementById('regName').value;
+      const email = document.getElementById('regEmail').value;
+      const password = document.getElementById('regPassword').value;
+      const confirmPassword = document.getElementById('regConfirmPassword').value;
+
+      if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
+      }
+
+      if (users.find(u => u.email === email)) {
+        alert('Email already registered!');
+        return;
+      }
+
+      const newUser = {
+        id: Date.now(),
+        name,
+        email,
+        password,
+        verified: true,
+        createdAt: new Date().toISOString()
+      };
+
+      users.push(newUser);
+      localStorage.setItem('users', JSON.stringify(users));
+      
+      alert('Registration successful! Please login.');
+      showPage('login');
+      e.target.reset();
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+
+      const user = users.find(u => u.email === email && u.password === password);
+
+      if (user) {
+        currentUser = { id: user.id, name: user.name, email: user.email };
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        
+        updateUIForLoggedInUser();
+        showPage('main');
+        alert('Login successful! Welcome back, ' + currentUser.name);
+        e.target.reset();
+      } else {
+        alert('Invalid email or password!');
+      }
+    }
+
+    function logout() {
+      currentUser = null;
+      localStorage.removeItem('currentUser');
+      updateUIForLoggedOutUser();
+      showPage('main');
+      alert('Logged out successfully!');
+    }
+
+    function updateUIForLoggedInUser() {
+      document.getElementById('loginBtn').style.display = 'none';
+      document.getElementById('registerBtn').style.display = 'none';
+      document.getElementById('dashboardBtn').style.display = 'inline-block';
+      document.getElementById('logoutBtn').style.display = 'inline-block';
+      document.getElementById('cartIcon').style.display = 'block';
+    }
+
+    function updateUIForLoggedOutUser() {
+      document.getElementById('loginBtn').style.display = 'inline-block';
+      document.getElementById('registerBtn').style.display = 'inline-block';
+      document.getElementById('dashboardBtn').style.display = 'none';
+      document.getElementById('logoutBtn').style.display = 'none';
+      document.getElementById('cartIcon').style.display = 'none';
+    }
+
+    function requireLogin() {
+      if (!currentUser) {
+        alert('Please login to place orders!');
+        showPage('login');
+      } else {
+        alert('Order feature - Coming soon!');
+      }
+    }
+
+    // Testimonials rotation
+    function rotateTestimonials() {
+      const testimonials = document.querySelectorAll('.testimonial');
+      let current = 0;
+      
+      setInterval(() => {
+        testimonials[current].classList.remove('active');
+        current = (current + 1) % testimonials.length;
+        testimonials[current].classList.add('active');
+      }, 5000);
+    }
+
+    // Contact form
+    function submitContact(e) {
+      e.preventDefault();
+      const name = document.getElementById('contactName').value;
+      const email = document.getElementById('contactEmail').value;
+      
+      alert(`Thank you for contacting us, ${name}!\n\nWe have received your message and will get back to you at ${email} soon.`);
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>
